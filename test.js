@@ -6,7 +6,7 @@ const express = require('express')                          // Imports the NodeJ
 // ENVIRONMENT SETUP
 const projectId = process.env.PROJECTID;                    // ProjectID
 const sessionId = Math.random().toString(36).substring(7);  // Random sessionId
-const query = "HELLO";                                      // Query. To be changed to user's input
+let query = "HELLO";                                      // Query. To be changed to user's input
 const languageCode = 'en';                                  // Language code in English
 const port = process.env.PORT                               // Port
 const options = {                                           // Credentials
@@ -24,12 +24,18 @@ app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`)
 })
 
+// Response format
+
 // Send response on base URL
 app.get('/', (req, res) => {
+    query = req.query.q
     console.log(projectId, sessionId, port, options);
-    executeQuery(projectId, sessionId, query, languageCode).then(function (resp) {
+    executeQuery(projectId, sessionId, query, languageCode).then(function(resp) {
         console.log("Successful response: ", resp);
-        res.send(resp)
+        const response = {
+            resp: resp,
+        }
+        res.json(response)
     })
 })
 
@@ -88,7 +94,7 @@ async function executeQuery(projectId, sessionId, query, languageCode) {
         // context = intentResponse.queryResult.outputContexts;
 
         // Fulfillment text from DialogFlow API
-        let response = `Fulfillment Text: ${intentResponse.queryResult.fulfillmentText}`
+        let response = `${intentResponse.queryResult.fulfillmentText}`
         console.log(response);
         return response
     } catch (error) {
