@@ -26,6 +26,7 @@ app.listen(port, () => {
 
 // Send response on base URL
 app.get('/', (req, res) => {
+    console.log(projectId, sessionId, port, options);
     executeQuery(projectId, sessionId, query, languageCode).then(function (resp) {
         console.log("Successful response: ", resp);
         res.send(resp)
