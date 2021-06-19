@@ -1,5 +1,5 @@
 // IMPORTS
-// require('dotenv').config()                               // Only for local testing
+require('dotenv').config()                               // Only for local testing
 const dialogflow = require('@google-cloud/dialogflow');     // Imports the Dialogflow library
 const express = require('express')                          // Imports the NodeJS web applicaion framework 
 
@@ -70,7 +70,7 @@ async function getIntent(
         };
     }
 
-    const responses = await sessionClient.getIntent(request);
+    const responses = await sessionClient.detectIntent(request);
     return responses[0];
 }
 
