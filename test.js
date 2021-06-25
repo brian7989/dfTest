@@ -25,6 +25,7 @@ expressApp.listen(port, () => {
 
 // Send response on base URL
 expressApp.get('/', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
     // Request parameter q  -->  .../?q
     const query = req.query.q
     sendAPIquery(projectId, sessionId, query, languageCode).then(function(resp) {
